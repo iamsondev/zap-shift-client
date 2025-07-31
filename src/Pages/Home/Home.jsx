@@ -5,6 +5,7 @@ import BrandLogosSection from './BrandLogo';
 import CoreFeaturesSection from './CoreFeaturesSection';
 import HowItWorksSection from './HowItWorksSection';
 import CustomerReviewSlider from './CustomerReviewSlider';
+import JoinUsSection from './JoinUsSection';
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
          <BrandLogosSection></BrandLogosSection>
          <CoreFeaturesSection></CoreFeaturesSection>
          <CustomerReviewSlider></CustomerReviewSlider>
+         <JoinUsSection></JoinUsSection>
          
     </div>
   );
