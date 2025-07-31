@@ -3,7 +3,7 @@ import React from "react";
 const JoinUsSection = () => {
   return (
     <section
-      className="w-full bg-[url('assets/B-merch.png')] bg-cover bg-center bg-no-repeat py-24 px-6 text-center text-white relative bg-emerald-900"
+      className="w-8/12 mx-auto rounded-3xl bg-[url('assets/B-merch.png')] bg-cover bg-center bg-no-repeat py-24 px-6 text-center text-white relative bg-green-900"
       
        
     >

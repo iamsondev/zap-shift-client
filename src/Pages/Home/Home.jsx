@@ -6,6 +6,7 @@ import CoreFeaturesSection from './CoreFeaturesSection';
 import HowItWorksSection from './HowItWorksSection';
 import CustomerReviewSlider from './CustomerReviewSlider';
 import JoinUsSection from './JoinUsSection';
+import ProfasAccordionSection from './ProfasAccordionSection';
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
          <CoreFeaturesSection></CoreFeaturesSection>
          <CustomerReviewSlider></CustomerReviewSlider>
          <JoinUsSection></JoinUsSection>
+         <ProfasAccordionSection></ProfasAccordionSection>
          
     </div>
   );
