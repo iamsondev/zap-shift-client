@@ -2,7 +2,8 @@ import React from "react";
 
 const ProfasAccordionSection = () => {
   return (
-    <section className="w-11/12 mx-auto py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-500">
+    <section data-aos="fade-up"
+     data-aos-duration="3000" className="full mx-auto py-20 px-6 bg-white dark:bg-gray-900 transition-colors duration-500">
       <div className="max-w-4xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
           Frequently Asked Questions

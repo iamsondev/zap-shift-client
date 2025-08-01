@@ -46,7 +46,8 @@ const services = [
 
 const ServiceSection = () => {
   return (
-    <section className="py-16 px-4 md:px-10 bg-base-100 text-base-content">
+    <section data-aos="fade-up"
+     data-aos-duration="3000" className="py-16 px-4 md:px-10 bg-base-100 text-base-content">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
         <p className="mb-10 text-lg text-gray-500 dark:text-gray-400">

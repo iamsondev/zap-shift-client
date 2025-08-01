@@ -2,8 +2,9 @@ import React from "react";
 
 const JoinUsSection = () => {
   return (
-    <section
-      className="w-8/12 mx-auto rounded-3xl bg-[url('assets/B-merch.png')] bg-cover bg-center bg-no-repeat py-24 px-6 text-center text-white relative bg-green-900"
+    <section data-aos="fade-up"
+     data-aos-duration="3000"
+      className="w-8/12 mx-auto rounded-3xl bg-[url('assets/B-merch.png')] bg-cover bg-center bg-no-repeat py-24 px-6 text-center text-white relative bg-[#004d4d]"
       
        
     >
@@ -11,10 +12,10 @@ const JoinUsSection = () => {
 
       <div className="relative z-10 max-w-3xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-          Partner With Profas Courier
+          Partner With ProFast Courier
         </h2>
         <p className="text-lg md:text-xl mb-10 font-medium">
-          Join our network to grow your business or earn extra income by delivering with Profas Courier. Be part of a trusted logistics ecosystem.
+          Join our network to grow your business or earn extra income by delivering with ProFast Courier. Be part of a trusted logistics ecosystem.
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">

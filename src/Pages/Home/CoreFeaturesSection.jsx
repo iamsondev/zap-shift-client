@@ -37,7 +37,8 @@ const features = [
 
 const CoreFeaturesSection = () => {
   return (
-    <section className="w-full py-20 px-6 bg-base-100 dark:bg-gray-900 transition-colors duration-500">
+    <section data-aos="fade-up"
+     data-aos-duration="3000" className="w-full py-20 px-6 bg-base-100 dark:bg-gray-900 transition-colors duration-500">
       <div className="max-w-5xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">Why Choose Us</h2>
         <p className="text-lg text-gray-600 dark:text-gray-300">

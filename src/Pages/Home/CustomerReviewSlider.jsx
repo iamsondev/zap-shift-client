@@ -33,7 +33,8 @@ const gradients = [
 ];
 
 const CustomerReviewSlider = () => (
-  <section className="w-full py-20 px-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-700">
+  <section data-aos="fade-up"
+     data-aos-duration="3000" className="w-full py-20 px-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-700" >
     <div className="max-w-5xl mx-auto text-center mb-14 px-4">
       <h2 className="text-5xl font-extrabold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">
         What Our Customers Say

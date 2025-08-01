@@ -33,7 +33,8 @@ const cardVariants = {
 };
 
 const HowItWorksSection = () => (
-  <section className="w-full py-20 px-6 bg-base-100 dark:bg-gray-900 transition-colors duration-500">
+  <section data-aos="fade-up"
+     data-aos-duration="3000" className="w-full py-20 px-6 bg-base-100 dark:bg-gray-900 transition-colors duration-500">
     {/* Header */}
     <div className="max-w-6xl mx-auto flex flex-col items-center mb-14">
       <div className="h-16 w-16 rounded-xl bg-white dark:bg-gray-100 shadow-md flex items-center justify-center mb-6">
