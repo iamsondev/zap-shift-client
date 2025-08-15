@@ -7,6 +7,7 @@ import Home from "../Pages/Home/Home";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../Pages/Authentication/Login/Login";
 import Register from "../Pages/Authentication/Registration/Register";
+import coverage from "../Pages/Shared/Coverage/coverage";
 
 
 export const router = createBrowserRouter([
@@ -17,6 +18,11 @@ export const router = createBrowserRouter([
       {
         index:true,
         Component:Home
+      },
+      {
+        path:'coverage',
+        Component:coverage,
+        loader:()=> fetch('../../public/service.json')
       }
     ]
   },
