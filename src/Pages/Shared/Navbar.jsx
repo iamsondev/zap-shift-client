@@ -7,6 +7,8 @@ const Navbar = () => {
     <li><NavLink>Home</NavLink></li>
     <li><NavLink>About</NavLink></li>
     <li><NavLink to='/coverage'>Coverage</NavLink></li>
+    <li><NavLink to='/sendParcel'>Send Parcel</NavLink></li>
+
   </>
   return (
     <div>
@@ -30,7 +32,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <NavLink to="/login"><span className='bg-lime-500 px-5 font-bold p-2 rounded-xl'>Login</span></NavLink>
         </div>
       </div>
     </div>
