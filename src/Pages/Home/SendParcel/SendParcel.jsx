@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 function generateTrackingId() {
   const prefix = "PK";
@@ -17,6 +18,8 @@ const SendParcel = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const axiosSecure = useAxiosSecure();
 
   const { user } = useAuth();
   const [services, setServices] = useState([]);
@@ -125,16 +128,24 @@ const SendParcel = () => {
         };
         console.log("Saved Parcel:", parcelData);
 
-        Swal.fire({
-          icon: "success",
-          title: "✅ Success",
-          text: "Parcel booked successfully!",
-          timer: 2000,
-          showConfirmButton: false,
-          timerProgressBar: true,
-        });
 
-        reset();
+        axiosSecure.post('/parcels', parcelData)
+          .then(res => {
+            console.log(res.data);
+            if (res.data.id) {
+              Swal.fire({
+                icon: "success",
+                title: "Redirecting",
+                text: "Proceeding to payment gateway!",
+                timer: 2000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+              });
+            }
+
+          })
+
+
       }
     });
   };
