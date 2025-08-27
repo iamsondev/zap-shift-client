@@ -1,26 +1,102 @@
-import React from 'react';
+import React, { useState } from "react";
+import { Outlet, Link } from "react-router"; // use react-router-dom
+import Logo from "../Pages/Shared/Logo";
 
 const DashboardLayout = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    
-      <div className="drawer lg:drawer-open">
-        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
-          {/* Page content here */}
-          <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-            Open drawer
-          </label>
+    <div className="flex min-h-screen flex-col lg:flex-row">
+      {/* Sidebar - Large Screens */}
+      <aside className="hidden lg:block w-72 bg-base-200 p-6 shadow-md">
+        <div className="m-5">
+          <Logo />
         </div>
-        <div className="drawer-side">
-          <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            {/* Sidebar content here */}
-            <li><a>Sidebar Item 1</a></li>
-            <li><a>Sidebar Item 2</a></li>
+        <h2 className="text-xl font-semibold mb-6">Dashboard</h2>
+        <nav>
+          <ul className="menu text-base-content space-y-2">
+            <li>
+              <Link
+                to="/dashboard"
+                className="hover:bg-base-300 rounded-lg p-2 transition"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/myParcels"
+                className="hover:bg-base-300 rounded-lg p-2 transition"
+              >
+                My Parcel
+              </Link>
+            </li>
           </ul>
+        </nav>
+      </aside>
+
+      {/* Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Topbar - Mobile Only */}
+        <div className="lg:hidden w-full bg-base-100 shadow p-4 flex justify-between items-center">
+          <span className="font-bold text-lg">Dashboard</span>
+          <button
+            className="btn btn-square btn-ghost"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {/* Hamburger Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {menuOpen && (
+          <div className="lg:hidden bg-base-200 shadow-md p-4">
+            <nav>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/dashboard"
+                    className="block hover:bg-base-300 rounded-lg p-2 transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/myParcels"
+                    className="block hover:bg-base-300 rounded-lg p-2 transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    My Parcel
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        )}
+
+        {/* Main Content */}
+        <main className="flex-1 p-6 bg-base-100">
+          <Outlet />
+        </main>
       </div>
-    
+    </div>
   );
 };
 
