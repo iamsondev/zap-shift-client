@@ -4,7 +4,17 @@ import Logo from './Logo';
 import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
-  const {user} = useAuth();
+  const {user, logOut} = useAuth();
+
+  const handleLogout = () => {
+    logOut()
+    .then(result => {
+      console.log(result)
+    })
+    .catch(error=> {
+        console.log(error)
+      })
+  }
   const navInfo = <>
     <li><NavLink>Home</NavLink></li>
     <li><NavLink>About</NavLink></li>
@@ -40,7 +50,10 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <NavLink to="/login"><span className='bg-lime-500 px-5 font-bold p-2 rounded-xl'>Login</span></NavLink>
+          {
+            user? <button onClick={handleLogout} className='btn btn-active bg-red-500'>Logout</button>
+            :<NavLink to="/login"><span className='bg-lime-500 px-5 font-bold p-2 rounded-xl'>Login</span></NavLink>
+          }
         </div>
       </div>
     </div>
