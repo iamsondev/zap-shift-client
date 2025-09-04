@@ -1,59 +1,78 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router'; // fixed import
 import Logo from './Logo';
 import useAuth from '../../hooks/useAuth';
 
 const Navbar = () => {
-  const {user, logOut} = useAuth();
+  const { user, logOut } = useAuth();
 
   const handleLogout = () => {
     logOut()
-    .then(result => {
-      console.log(result)
-    })
-    .catch(error=> {
-        console.log(error)
-      })
-  }
-  const navInfo = <>
-    <li><NavLink>Home</NavLink></li>
-    <li><NavLink>About</NavLink></li>
-    <li><NavLink to='/coverage'>Coverage</NavLink></li>
-    <li><NavLink to='/sendParcel'>Send Parcel</NavLink></li>
+      .then(result => console.log(result))
+      .catch(error => console.log(error));
+  };
 
-    {
-      user && <>
-           <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+  const navInfo = (
+    <>
+      <li><NavLink to="/">Home</NavLink></li>
+      <li><NavLink to="/about">About</NavLink></li>
+      <li><NavLink to="/coverage">Coverage</NavLink></li>
+      <li><NavLink to="/sendParcel">Send Parcel</NavLink></li>
+      <li><NavLink to="/beARider">Be A Rider</NavLink></li> {/* ✅ Added */}
+
+      {user && (
+        <>
+          <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+          
         </>
-    }
+      )}
+    </>
+  );
 
-  </>
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+              </svg>
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                {navInfo}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            >
+              {navInfo}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl"><Logo></Logo></a>
+          <a className="btn btn-ghost text-xl">
+            <Logo />
+          </a>
         </div>
+
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-             {navInfo}
+            {navInfo}
           </ul>
         </div>
+
         <div className="navbar-end">
-          {
-            user? <button onClick={handleLogout} className='btn btn-active bg-red-500'>Logout</button>
-            :<NavLink to="/login"><span className='bg-lime-500 px-5 font-bold p-2 rounded-xl'>Login</span></NavLink>
-          }
+          {user ? (
+            <button onClick={handleLogout} className="btn btn-active bg-red-500">
+              Logout
+            </button>
+          ) : (
+            <NavLink to="/login">
+              <span className="bg-lime-500 px-5 font-bold p-2 rounded-xl">Login</span>
+            </NavLink>
+          )}
         </div>
       </div>
     </div>
