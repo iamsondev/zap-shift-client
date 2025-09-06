@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router"; // use react-router-dom
+import { Outlet, Link } from "react-router"; // ✅ corrected import
 import Logo from "../Pages/Shared/Logo";
 import {
   FaHome,
@@ -8,18 +8,22 @@ import {
   FaBars,
   FaUserEdit,
   FaSearchLocation,
+  FaUserPlus,
+  FaUserCheck
 } from "react-icons/fa";
 
 const DashboardLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ✅ Define menu items once
+  // ✅ Updated menu items
   const menuItems = [
     { to: "/dashboard", label: "Home", icon: <FaHome /> },
     { to: "/dashboard/myParcels", label: "My Parcel", icon: <FaBoxOpen /> },
     { to: "/dashboard/paymentHistory", label: "Payment History", icon: <FaCreditCard /> },
     { to: "/dashboard/trackPackage", label: "Track a Package", icon: <FaSearchLocation /> },
     { to: "/dashboard/updateProfile", label: "Update Profile", icon: <FaUserEdit /> },
+    { to: "/dashboard/pending-riders", label: "Pending Riders", icon: <FaUserPlus /> },
+    { to: "/dashboard/active-riders", label: "Active Riders", icon: <FaUserCheck /> },
   ];
 
   return (
@@ -70,7 +74,7 @@ const DashboardLayout = () => {
                     <Link
                       to={item.to}
                       className="flex items-center gap-2 hover:bg-base-300 rounded-lg p-2 transition"
-                      onClick={() => setMenuOpen(false)} // ✅ closes menu on click
+                      onClick={() => setMenuOpen(false)} // closes menu on click
                     >
                       {item.icon} {item.label}
                     </Link>
