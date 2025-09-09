@@ -17,6 +17,8 @@ import PaymentHistory from "../Pages/Dashboard.jsx/PaymentHistory/PaymentHistory
 import BeARider from "../Pages/Home/BeARider/BeARider";
 import PendingRiders from "../Pages/Dashboard.jsx/PendingRiders";
 import ActiveRiders from "../Pages/Dashboard.jsx/ActiveRiders";
+import DashboardHome from "../Pages/Dashboard.jsx/DashboardHome";
+import MakeAdmin from "../Pages/Dashboard.jsx/MakeAdmin";
 
 
 
@@ -68,6 +70,10 @@ export const router = createBrowserRouter([
     </PrivateRoute>,
     children:[
       {
+        index:true,
+        element:<DashboardHome></DashboardHome>
+      },
+      {
         path: 'myParcels',
         element:<MyParcels/>
       },
@@ -85,6 +91,10 @@ export const router = createBrowserRouter([
       },{
         path:'active-riders',
         Component:ActiveRiders
+      },
+      {
+        path:'makeAdmin',
+        Component:MakeAdmin
       }
     ]
   }

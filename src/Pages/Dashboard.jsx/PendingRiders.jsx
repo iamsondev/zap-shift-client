@@ -1,33 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const PendingRiders = () => {
-  const [riders, setRiders] = useState([]);
   const [selectedRider, setSelectedRider] = useState(null);
   const axiosSecure = useAxiosSecure();
 
-  // Fetch pending riders
-  const fetchRiders = async () => {
-    try {
+  // use trastack query
+  const { isPending, data: riders = [], refetch } = useQuery({
+    queryKey: ['pending-riders'],
+    queryFn: async () => {
       const res = await axiosSecure.get("/riders/pending");
-      setRiders(res.data.riders);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+      return res.data.riders || []; // ✅ return array only
+    },
+  });
 
-  useEffect(() => {
-    fetchRiders();
-  }, []);
+  if (isPending) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
+
 
   // Approve rider
   const handleApprove = async (riderId) => {
     try {
       const res = await axiosSecure.patch(`/riders/${riderId}`, { status: "active" });
-      if (res.data.modifiedCount) {
+      if (res.data.modifiedCount > 0) {
         Swal.fire("Approved!", "Rider has been approved.", "success");
-        fetchRiders();
+        refetch(); // ✅ will remove rider from table
       }
     } catch (err) {
       console.error(err);
@@ -48,9 +52,9 @@ const PendingRiders = () => {
       if (result.isConfirmed) {
         try {
           const res = await axiosSecure.delete(`/riders/${riderId}`);
-          if (res.data.deletedCount) {
+          if (res.data.deletedCount > 0) {
             Swal.fire("Cancelled!", "Rider application has been cancelled.", "success");
-            fetchRiders();
+            refetch(); // ✅ will remove rider from table
           }
         } catch (err) {
           console.error(err);

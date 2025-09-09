@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router"; // ✅ corrected import
-import Logo from "../Pages/Shared/Logo";
+import { Outlet, Link } from "react-router";
 import {
   FaHome,
   FaBoxOpen,
@@ -9,38 +8,39 @@ import {
   FaUserEdit,
   FaSearchLocation,
   FaUserPlus,
-  FaUserCheck
+  FaUserCheck,
+  FaUserShield,   // 👈 Make Admin icon
 } from "react-icons/fa";
+import Logo from "../Pages/Shared/Logo";
 
 const DashboardLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ✅ Updated menu items
   const menuItems = [
     { to: "/dashboard", label: "Home", icon: <FaHome /> },
-    { to: "/dashboard/myParcels", label: "My Parcel", icon: <FaBoxOpen /> },
+    { to: "/dashboard/myParcels", label: "My Parcels", icon: <FaBoxOpen /> },
     { to: "/dashboard/paymentHistory", label: "Payment History", icon: <FaCreditCard /> },
-    { to: "/dashboard/trackPackage", label: "Track a Package", icon: <FaSearchLocation /> },
+    { to: "/dashboard/trackPackage", label: "Track Package", icon: <FaSearchLocation /> },
     { to: "/dashboard/updateProfile", label: "Update Profile", icon: <FaUserEdit /> },
     { to: "/dashboard/pending-riders", label: "Pending Riders", icon: <FaUserPlus /> },
     { to: "/dashboard/active-riders", label: "Active Riders", icon: <FaUserCheck /> },
+    { to: "/dashboard/makeAdmin", label: "Make Admin", icon: <FaUserShield /> }, // 👈 New item
   ];
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
-      {/* Sidebar - Large Screens */}
-      <aside className="hidden lg:block w-72 bg-base-200 p-6 shadow-md">
-        <div className="m-5">
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Sidebar */}
+      <aside className="hidden lg:flex flex-col w-72 bg-white dark:bg-gray-800 shadow-md">
+        <div className="p-6">
           <Logo />
         </div>
-        <h2 className="text-xl font-semibold mb-6">Dashboard</h2>
-        <nav>
-          <ul className="menu text-base-content space-y-2">
+        <nav className="mt-6">
+          <ul className="space-y-2">
             {menuItems.map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
-                  className="flex items-center gap-2 hover:bg-base-300 rounded-lg p-2 transition"
+                  className="flex items-center gap-3 p-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                 >
                   {item.icon} {item.label}
                 </Link>
@@ -50,31 +50,31 @@ const DashboardLayout = () => {
         </nav>
       </aside>
 
-      {/* Content Area */}
+      {/* Main content */}
       <div className="flex-1 flex flex-col">
-        {/* Topbar - Mobile Only */}
-        <div className="lg:hidden w-full bg-base-100 shadow p-4 flex justify-between items-center">
-          <span className="font-bold text-lg">Dashboard</span>
+        {/* Topbar for mobile */}
+        <div className="lg:hidden w-full bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
+          <span className="font-bold text-lg text-gray-800 dark:text-gray-100">Dashboard</span>
           <button
             className="btn btn-square btn-ghost"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle Menu"
           >
-            <FaBars className="h-6 w-6" />
+            <FaBars className="h-6 w-6 text-gray-800 dark:text-gray-100" />
           </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile dropdown menu */}
         {menuOpen && (
-          <div className="lg:hidden bg-base-200 shadow-md p-4">
+          <div className="lg:hidden bg-white dark:bg-gray-800 shadow-md p-4">
             <nav>
               <ul className="space-y-2">
                 {menuItems.map((item) => (
                   <li key={item.to}>
                     <Link
                       to={item.to}
-                      className="flex items-center gap-2 hover:bg-base-300 rounded-lg p-2 transition"
-                      onClick={() => setMenuOpen(false)} // closes menu on click
+                      className="flex items-center gap-3 p-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                      onClick={() => setMenuOpen(false)}
                     >
                       {item.icon} {item.label}
                     </Link>
@@ -85,8 +85,8 @@ const DashboardLayout = () => {
           </div>
         )}
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 bg-base-100">
+        {/* Page Outlet */}
+        <main className="flex-1 p-6">
           <Outlet />
         </main>
       </div>
