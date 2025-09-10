@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router";
+import { Outlet, NavLink } from "react-router";
 import {
   FaHome,
   FaBoxOpen,
@@ -9,23 +9,16 @@ import {
   FaSearchLocation,
   FaUserPlus,
   FaUserCheck,
-  FaUserShield,   // 👈 Make Admin icon
+  FaUserShield,
 } from "react-icons/fa";
 import Logo from "../Pages/Shared/Logo";
+import useUserRole from "../hooks/useUserRole";
 
 const DashboardLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { role, roleLoading } = useUserRole();
 
-  const menuItems = [
-    { to: "/dashboard", label: "Home", icon: <FaHome /> },
-    { to: "/dashboard/myParcels", label: "My Parcels", icon: <FaBoxOpen /> },
-    { to: "/dashboard/paymentHistory", label: "Payment History", icon: <FaCreditCard /> },
-    { to: "/dashboard/trackPackage", label: "Track Package", icon: <FaSearchLocation /> },
-    { to: "/dashboard/updateProfile", label: "Update Profile", icon: <FaUserEdit /> },
-    { to: "/dashboard/pending-riders", label: "Pending Riders", icon: <FaUserPlus /> },
-    { to: "/dashboard/active-riders", label: "Active Riders", icon: <FaUserCheck /> },
-    { to: "/dashboard/makeAdmin", label: "Make Admin", icon: <FaUserShield /> }, // 👈 New item
-  ];
+  if (roleLoading) return <p>Checking role...</p>;
 
   return (
     <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -36,16 +29,130 @@ const DashboardLayout = () => {
         </div>
         <nav className="mt-6">
           <ul className="space-y-2">
-            {menuItems.map((item) => (
-              <li key={item.to}>
-                <Link
-                  to={item.to}
-                  className="flex items-center gap-3 p-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                >
-                  {item.icon} {item.label}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-blue-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`
+                }
+              >
+                <FaHome /> Home
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/myParcels"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-blue-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`
+                }
+              >
+                <FaBoxOpen /> My Parcels
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/paymentHistory"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-blue-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`
+                }
+              >
+                <FaCreditCard /> Payment History
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/trackPackage"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-blue-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`
+                }
+              >
+                <FaSearchLocation /> Track Package
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/updateProfile"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-blue-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`
+                }
+              >
+                <FaUserEdit /> Update Profile
+              </NavLink>
+            </li>
+
+            {/* Admin-only links */}
+            {!roleLoading && role === "admin" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/pending-riders"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                  >
+                    <FaUserPlus /> Pending Riders
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/active-riders"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                  >
+                    <FaUserCheck /> Active Riders
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/makeAdmin"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                  >
+                    <FaUserShield /> Make Admin
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </aside>
@@ -69,17 +176,137 @@ const DashboardLayout = () => {
           <div className="lg:hidden bg-white dark:bg-gray-800 shadow-md p-4">
             <nav>
               <ul className="space-y-2">
-                {menuItems.map((item) => (
-                  <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      className="flex items-center gap-3 p-3 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.icon} {item.label}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaHome /> Home
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/myParcels"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaBoxOpen /> My Parcels
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/paymentHistory"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaCreditCard /> Payment History
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/trackPackage"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaSearchLocation /> Track Package
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/dashboard/updateProfile"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${
+                        isActive
+                          ? "bg-blue-500 text-white shadow-md"
+                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <FaUserEdit /> Update Profile
+                  </NavLink>
+                </li>
+
+                {role === "admin" && (
+                  <>
+                    <li>
+                      <NavLink
+                        to="/dashboard/pending-riders"
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 p-3 rounded-lg transition ${
+                            isActive
+                              ? "bg-blue-500 text-white shadow-md"
+                              : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          }`
+                        }
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <FaUserPlus /> Pending Riders
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink
+                        to="/dashboard/active-riders"
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 p-3 rounded-lg transition ${
+                            isActive
+                              ? "bg-blue-500 text-white shadow-md"
+                              : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          }`
+                        }
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <FaUserCheck /> Active Riders
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink
+                        to="/dashboard/makeAdmin"
+                        className={({ isActive }) =>
+                          `flex items-center gap-3 p-3 rounded-lg transition ${
+                            isActive
+                              ? "bg-blue-500 text-white shadow-md"
+                              : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          }`
+                        }
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <FaUserShield /> Make Admin
+                      </NavLink>
+                    </li>
+                  </>
+                )}
               </ul>
             </nav>
           </div>
