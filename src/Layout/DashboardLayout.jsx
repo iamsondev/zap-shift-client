@@ -10,6 +10,7 @@ import {
   FaUserPlus,
   FaUserCheck,
   FaUserShield,
+  FaMotorcycle,
 } from "react-icons/fa";
 import Logo from "../Pages/Shared/Logo";
 import useUserRole from "../hooks/useUserRole";
@@ -33,10 +34,9 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard"
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-lg transition ${
-                    isActive
-                      ? "bg-blue-500 text-white shadow-md"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`
                 }
               >
@@ -48,10 +48,9 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/myParcels"
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-lg transition ${
-                    isActive
-                      ? "bg-blue-500 text-white shadow-md"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`
                 }
               >
@@ -63,10 +62,9 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/paymentHistory"
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-lg transition ${
-                    isActive
-                      ? "bg-blue-500 text-white shadow-md"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`
                 }
               >
@@ -78,10 +76,9 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/trackPackage"
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-lg transition ${
-                    isActive
-                      ? "bg-blue-500 text-white shadow-md"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`
                 }
               >
@@ -93,10 +90,9 @@ const DashboardLayout = () => {
               <NavLink
                 to="/dashboard/updateProfile"
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-3 rounded-lg transition ${
-                    isActive
-                      ? "bg-blue-500 text-white shadow-md"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`
                 }
               >
@@ -111,25 +107,37 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard/pending-riders"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                   >
                     <FaUserPlus /> Pending Riders
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/assignRider"
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-green-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      }`
+                    }
+                  >
+                    <FaMotorcycle /> Assign a Rider
+                  </NavLink>
+                </li>
+
 
                 <li>
                   <NavLink
                     to="/dashboard/active-riders"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                   >
@@ -141,10 +149,9 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard/makeAdmin"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                   >
@@ -180,10 +187,9 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                     onClick={() => setMenuOpen(false)}
@@ -196,10 +202,9 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard/myParcels"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                     onClick={() => setMenuOpen(false)}
@@ -212,10 +217,9 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard/paymentHistory"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                     onClick={() => setMenuOpen(false)}
@@ -228,10 +232,9 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard/trackPackage"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                     onClick={() => setMenuOpen(false)}
@@ -244,10 +247,9 @@ const DashboardLayout = () => {
                   <NavLink
                     to="/dashboard/updateProfile"
                     className={({ isActive }) =>
-                      `flex items-center gap-3 p-3 rounded-lg transition ${
-                        isActive
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                      `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                       }`
                     }
                     onClick={() => setMenuOpen(false)}
@@ -262,10 +264,9 @@ const DashboardLayout = () => {
                       <NavLink
                         to="/dashboard/pending-riders"
                         className={({ isActive }) =>
-                          `flex items-center gap-3 p-3 rounded-lg transition ${
-                            isActive
-                              ? "bg-blue-500 text-white shadow-md"
-                              : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                            ? "bg-blue-500 text-white shadow-md"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                           }`
                         }
                         onClick={() => setMenuOpen(false)}
@@ -278,10 +279,9 @@ const DashboardLayout = () => {
                       <NavLink
                         to="/dashboard/active-riders"
                         className={({ isActive }) =>
-                          `flex items-center gap-3 p-3 rounded-lg transition ${
-                            isActive
-                              ? "bg-blue-500 text-white shadow-md"
-                              : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                            ? "bg-blue-500 text-white shadow-md"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                           }`
                         }
                         onClick={() => setMenuOpen(false)}
@@ -294,10 +294,9 @@ const DashboardLayout = () => {
                       <NavLink
                         to="/dashboard/makeAdmin"
                         className={({ isActive }) =>
-                          `flex items-center gap-3 p-3 rounded-lg transition ${
-                            isActive
-                              ? "bg-blue-500 text-white shadow-md"
-                              : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                            ? "bg-blue-500 text-white shadow-md"
+                            : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                           }`
                         }
                         onClick={() => setMenuOpen(false)}

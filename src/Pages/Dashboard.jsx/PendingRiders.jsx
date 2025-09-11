@@ -117,24 +117,60 @@ const PendingRiders = () => {
 
       {/* Rider Details Modal */}
       {selectedRider && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl w-11/12 md:w-1/2">
-            <h2 className="text-xl font-bold mb-4">{selectedRider.name}'s Details</h2>
-            <ul className="space-y-2">
-              <li><strong>Email:</strong> {selectedRider.email}</li>
-              <li><strong>Phone:</strong> {selectedRider.phone}</li>
-              <li><strong>Age:</strong> {selectedRider.age}</li>
-              <li><strong>Region:</strong> {selectedRider.region}</li>
-              <li><strong>District:</strong> {selectedRider.district}</li>
-              <li><strong>NID:</strong> {selectedRider.nid}</li>
-              <li><strong>Bike Brand:</strong> {selectedRider.bikeBrand}</li>
-              <li><strong>Bike Registration:</strong> {selectedRider.bikeRegNumber}</li>
-              <li><strong>Extra Info:</strong> {selectedRider.extraInfo}</li>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gradient-to-br from-purple-50 via-white to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-purple-950 
+                    shadow-2xl rounded-2xl w-11/12 md:w-1/2 p-6 
+                    animate-[fadeIn_0.3s_ease-out]">
+            {/* Header */}
+            <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mb-6 text-center">
+              {selectedRider.name}'s Profile
+            </h2>
+
+            {/* Rider Info */}
+            <ul className="space-y-3">
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Email:</span>
+                <span>{selectedRider.email}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Phone:</span>
+                <span>{selectedRider.phone}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Age:</span>
+                <span>{selectedRider.age}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Region:</span>
+                <span>{selectedRider.region}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">District:</span>
+                <span>{selectedRider.district}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">NID:</span>
+                <span>{selectedRider.nid}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Bike Brand:</span>
+                <span>{selectedRider.bikeBrand}</span>
+              </li>
+              <li className="flex justify-between border-b pb-2">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Bike Reg:</span>
+                <span>{selectedRider.bikeRegNumber}</span>
+              </li>
+              <li className="flex justify-between">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">Extra Info:</span>
+                <span>{selectedRider.extraInfo}</span>
+              </li>
             </ul>
-            <div className="mt-4 flex justify-end gap-2">
+
+            {/* Footer */}
+            <div className="mt-6 flex justify-center">
               <button
                 onClick={() => setSelectedRider(null)}
-                className="btn btn-sm btn-ghost"
+                className="px-6 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-md transition-all duration-200"
               >
                 Close
               </button>
@@ -142,6 +178,7 @@ const PendingRiders = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };

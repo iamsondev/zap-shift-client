@@ -27,12 +27,12 @@ const MakeAdmin = () => {
 
   const makeAdminMutation = useMutation({
     mutationFn: (userId) =>
-      axiosSecure.put(`/users/${userId}/role`, { role: "admin" }),
+      axiosSecure.patch(`/users/${userId}/role`, { role: "admin" }),
   });
 
   const removeAdminMutation = useMutation({
     mutationFn: (userId) =>
-      axiosSecure.put(`/users/${userId}/role`, { role: "user" }),
+      axiosSecure.patch(`/users/${userId}/role`, { role: "user" }),
   });
 
   return (
