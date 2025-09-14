@@ -22,6 +22,10 @@ import AdminRoutes from "../Pages/Routes/AdminRoutes";
 import MakeAdmin from "../Pages/Dashboard.jsx/MakeAdmin";
 import Forbidden from "../Pages/forbidden/forbidden";
 import AssignRider from "../Pages/Dashboard.jsx/AssignRider";
+import PendingDeliveries from "../Pages/Dashboard.jsx/PendingDeliveries";
+import RiderRoutes from "../Pages/Routes/RiderRoutes";
+import CompletedDeliveries from "../Pages/Dashboard.jsx/CompletedDeliveries";
+import MyEarnings from "../Pages/Dashboard.jsx/MyEarnings";
 
 
 export const router = createBrowserRouter([
@@ -91,6 +95,20 @@ export const router = createBrowserRouter([
         path:'paymentHistory',
         Component:PaymentHistory
       },
+      // Riders
+       {
+        path:'pending-deliveries',
+        element:<RiderRoutes><PendingDeliveries></PendingDeliveries></RiderRoutes>
+       },
+       {
+        path:'completed-deliveries',
+        element:<RiderRoutes><CompletedDeliveries></CompletedDeliveries></RiderRoutes>
+       },
+       {
+        path:'my-earnings',
+        element:<RiderRoutes><MyEarnings></MyEarnings></RiderRoutes>
+       },
+      // Admins
       {
         path:'assignRider',
         element:<AdminRoutes><AssignRider></AssignRider></AdminRoutes>

@@ -2,14 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  const [selectedParcel, setSelectedParcel] = useState(null); // ✅ Modal state
+  const [selectedParcel, setSelectedParcel] = useState(null); // Modal state
 
   const { data: parcels = [], isLoading, error, refetch } = useQuery({
     queryKey: ['my-parcels', user?.email],
@@ -41,7 +41,7 @@ const MyParcels = () => {
   };
 
   const handleView = (parcel) => {
-    setSelectedParcel(parcel); // ✅ Modal খুলতে parcel সেট করলাম
+    setSelectedParcel(parcel);
     document.getElementById('parcel_modal').showModal();
   };
 
@@ -62,6 +62,7 @@ const MyParcels = () => {
                 <th>Created At</th>
                 <th>Cost</th>
                 <th>Payment</th>
+                <th>Rider Email</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -83,6 +84,11 @@ const MyParcels = () => {
                       <span className="badge badge-success">Paid</span>
                     ) : (
                       <span className="badge badge-error">Unpaid</span>
+                    )}
+                  </td>
+                  <td>
+                    {parcel.assignedRider?.riderEmail || (
+                      <span className="text-gray-400 italic">Not assigned</span>
                     )}
                   </td>
                   <td className="space-x-2">
@@ -113,7 +119,7 @@ const MyParcels = () => {
           </table>
         </div>
 
-        {/* ✅ Modal Component */}
+        {/* Modal */}
         <dialog id="parcel_modal" className="modal">
           <div className="modal-box max-w-lg bg-gradient-to-br from-base-200 via-base-100 to-base-200 rounded-2xl shadow-2xl border border-base-300">
             {selectedParcel && (
@@ -144,8 +150,12 @@ const MyParcels = () => {
                     <span className="font-semibold text-primary">Created:</span>{" "}
                     {new Date(selectedParcel.creation_date).toLocaleString()}
                   </p>
+                  <p className="text-lg">
+                    <span className="font-semibold text-primary">Rider Email:</span>{" "}
+                    {selectedParcel.assignedRider?.riderEmail || "Not assigned yet"}
+                  </p>
                 </div>
-              </>
+            </>
             )}
             <div className="modal-action mt-6">
               <form method="dialog">

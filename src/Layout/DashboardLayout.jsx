@@ -11,6 +11,9 @@ import {
   FaUserCheck,
   FaUserShield,
   FaMotorcycle,
+  FaTruck,
+  FaCheckCircle,
+  FaDollarSign,
 } from "react-icons/fa";
 import Logo from "../Pages/Shared/Logo";
 import useUserRole from "../hooks/useUserRole";
@@ -99,6 +102,49 @@ const DashboardLayout = () => {
                 <FaUserEdit /> Update Profile
               </NavLink>
             </li>
+            {/* Riders Link */}
+            {!roleLoading && role === "rider" && <>
+              <li>
+                <NavLink
+                  to="/dashboard/pending-deliveries"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                      ? "bg-blue-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  <FaTruck /> Pending Deliveries
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/completed-deliveries"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                      ? "bg-green-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  <FaCheckCircle /> Completed Deliveries
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/my-earnings"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-3 rounded-lg transition ${isActive
+                      ? "bg-green-500 text-white shadow-md"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  <FaDollarSign /> My Earnings
+                </NavLink>
+              </li>
+
+            </>}
 
             {/* Admin-only links */}
             {!roleLoading && role === "admin" && (

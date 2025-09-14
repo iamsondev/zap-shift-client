@@ -57,15 +57,24 @@ const AssignRider = () => {
       await axiosSecure.patch(`/parcels/${selectedParcel._id}/assign-rider`, {
         riderId: rider._id,
         riderName: rider.name,
+        riderEmail: rider.email,
       });
 
-      // SweetAlert instead of alert
-      Swal.fire(`Rider ${rider.name} assigned successfully!`);
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: `Rider ${rider.name} assigned successfully!`,
+        confirmButtonColor: "#3085d6",
+      });
 
       closeAssignModal();
     } catch (err) {
-      console.error(err);
-      Swal.fire("Failed to assign rider");
+      console.error("Assign rider error:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Failed to assign rider",
+        text: err.response?.data?.message || "Something went wrong on the server",
+      });
     }
   };
 
@@ -118,8 +127,8 @@ const AssignRider = () => {
                   <td>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-semibold ${parcel.delivery_status === "not_collected"
-                          ? "bg-yellow-200 text-yellow-800"
-                          : "bg-green-200 text-green-800"
+                        ? "bg-yellow-200 text-yellow-800"
+                        : "bg-green-200 text-green-800"
                         }`}
                     >
                       {parcel.delivery_status}
@@ -128,8 +137,8 @@ const AssignRider = () => {
                   <td>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-semibold ${parcel.Payment_status === "unpaid"
-                          ? "bg-red-200 text-red-800"
-                          : "bg-green-200 text-green-800"
+                        ? "bg-red-200 text-red-800"
+                        : "bg-green-200 text-green-800"
                         }`}
                     >
                       {parcel.Payment_status}
