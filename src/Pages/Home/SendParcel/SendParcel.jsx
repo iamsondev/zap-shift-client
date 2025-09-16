@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useTrackingLogger from "../../../hooks/useTrackingLogger";
 
 function generateTrackingId() {
   const prefix = "PK";
@@ -24,6 +25,7 @@ const SendParcel = () => {
   const { user } = useAuth();
   const [services, setServices] = useState([]);
   const [regions, setRegions] = useState([]);
+  const { logTracking } = useTrackingLogger();
 
   const senderRegion = watch("sender_region");
   const receiverRegion = watch("receiver_region");
@@ -93,15 +95,10 @@ const SendParcel = () => {
       html: `
       <div style="text-align:left; font-size:16px; line-height:1.6;">
         <p><strong>Sender Name:</strong> ${data.sender_name}</p>
-        <p><strong>Sender Region:</strong> ${data.sender_region}</p>
         <p><strong>Receiver Name:</strong> ${data.receiver_name}</p>
-        <p><strong>Receiver Region:</strong> ${data.receiver_region}</p>
         <p><strong>Parcel Type:</strong> ${data.type}</p>
-        <p><strong>Parcel Weight:</strong> ${data.weight || 0} kg</p>
         <p><strong>Base Cost:</strong> ৳${base}</p>
         <p><strong>Extra Cost:</strong> ৳${extra}</p>
-        <p><strong>Estimated Delivery:</strong> ${data.estimated_delivery || "2-5 days"}</p>
-        <hr style="border:none; border-top:1px solid #ddd; margin:10px 0;"/>
         <p><strong>Total Cost:</strong> <span style="color:#28a745; font-size:18px;">৳${total}</span></p>
       </div>
     `,
@@ -109,43 +106,48 @@ const SendParcel = () => {
       showCancelButton: true,
       confirmButtonText: "✅ Confirm Booking",
       cancelButtonText: "❌ Cancel",
-      buttonsStyling: true,
-      customClass: {
-        popup: "swal2-shadow swal2-rounded",
-        confirmButton: "bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md",
-        cancelButton: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md",
-      },
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        const newTrackingId = generateTrackingId();
+
         const parcelData = {
           ...data,
           deliveryCost: total,
           Payment_status: "unpaid",
           delivery_status: "not_collected",
           created_by_email: user?.email || "",
-          tracking_id: generateTrackingId(),
+          tracking_id: newTrackingId,
           creation_date: new Date().toISOString(),
         };
-        console.log("Saved Parcel:", parcelData);
 
+        try {
+          const res = await axiosSecure.post("/parcels", parcelData);
 
-        axiosSecure.post('/parcels', parcelData)
-          .then(res => {
-            console.log(res.data);
-            if (res.data.id) {
-              Swal.fire({
-                icon: "success",
-                title: "Redirecting",
-                text: "Proceeding to payment gateway!",
-                timer: 2000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-              });
-            }
+          if (res.data.id) {
+            // ✅ Log tracking immediately after parcel creation
+            await logTracking({
+              tracking_id: newTrackingId,
+              status: "Parcel Submitted",
+              location: data.sender_region,
+              details: `Parcel submitted by ${user?.email || "Unknown User"}`,
+              updated_by: user?.email || "system",
+            });
 
-          })
+            Swal.fire({
+              icon: "success",
+              title: "Redirecting",
+              text: "Proceeding to payment gateway!",
+              timer: 2000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+            });
 
-
+            reset(); // ✅ clear form after submission
+          }
+        } catch (err) {
+          console.error("❌ Error creating parcel:", err);
+          Swal.fire("Error", "Failed to create parcel. Try again!", "error");
+        }
       }
     });
   };

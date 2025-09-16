@@ -26,6 +26,7 @@ import PendingDeliveries from "../Pages/Dashboard.jsx/PendingDeliveries";
 import RiderRoutes from "../Pages/Routes/RiderRoutes";
 import CompletedDeliveries from "../Pages/Dashboard.jsx/CompletedDeliveries";
 import MyEarnings from "../Pages/Dashboard.jsx/MyEarnings";
+import TrackParcel from "../Pages/Dashboard.jsx/TrackParcel";
 
 
 export const router = createBrowserRouter([
@@ -94,6 +95,10 @@ export const router = createBrowserRouter([
       {
         path:'paymentHistory',
         Component:PaymentHistory
+      },
+      {
+        path:'trackParcel',
+        Component:TrackParcel
       },
       // Riders
        {

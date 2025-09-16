@@ -1,13 +1,15 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useTrackingLogger from "../../hooks/useTrackingLogger";
 import Swal from "sweetalert2";
 
 const PendingDeliveries = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const { logTracking } = useTrackingLogger();
 
-  // ✅ Fetch all pending parcels assigned to the rider
+  // Fetch all pending parcels assigned to the rider
   const { data: parcels = [], isLoading, error } = useQuery({
     queryKey: ["rider-parcels"],
     queryFn: async () => {
@@ -16,14 +18,39 @@ const PendingDeliveries = () => {
     },
   });
 
-  // ✅ Mutation to update parcel status
+  // Mutation to update parcel status
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, newStatus }) => {
       const res = await axiosSecure.patch(`/riders/parcels/${id}/status`, { newStatus });
       return res.data;
     },
-    onSuccess: () => {
-      Swal.fire("Success!", "Parcel status updated.", "success");
+    onSuccess: async (updatedParcel) => {
+      // Log tracking for the new status
+      try {
+        if (updatedParcel.status === "in-transit") {
+          await logTracking({
+            tracking_id: updatedParcel.tracking_id,
+            status: "in-transit",
+            message: `Picked up by ${updatedParcel.assignedRider.riderName}`,
+            details: {
+              picked_up_by: updatedParcel.assignedRider.riderName,
+            },
+          });
+        } else if (updatedParcel.status === "delivered") {
+          await logTracking({
+            tracking_id: updatedParcel.tracking_id,
+            status: "delivered",
+            message: `Delivered by ${updatedParcel.assignedRider.riderName}`,
+            details: {
+              delivered_by: updatedParcel.assignedRider.riderName,
+            },
+          });
+        }
+      } catch (err) {
+        console.error("❌ Tracking log failed:", err);
+      }
+
+      Swal.fire("Success!", `Parcel status updated to ${updatedParcel.status}.`, "success");
       queryClient.invalidateQueries({ queryKey: ["rider-parcels"] });
     },
     onError: (err) => {
@@ -43,9 +70,7 @@ const PendingDeliveries = () => {
 
   if (isLoading) return <p>Loading pending deliveries...</p>;
   if (error) return <p>Failed to load parcels.</p>;
-
-  if (parcels.length === 0)
-    return <p className="text-center text-xl">🎉 No pending deliveries!</p>;
+  if (parcels.length === 0) return <p className="text-center text-xl">🎉 No pending deliveries!</p>;
 
   return (
     <div className="overflow-x-auto">

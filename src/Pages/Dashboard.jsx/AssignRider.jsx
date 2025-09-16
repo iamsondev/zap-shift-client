@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useTrackingLogger from "../../hooks/useTrackingLogger";
 import Swal from "sweetalert2";
 
 const AssignRider = () => {
-  const axiosSecure = useAxiosSecure();
-  const [selectedParcel, setSelectedParcel] = useState(null); // Parcel selected for assigning rider
+  const axiosSecure = useAxiosSecure(); // should have admin JWT
+  const { logTracking } = useTrackingLogger(); // hook for logging tracking events
+  const [selectedParcel, setSelectedParcel] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   // Fetch pending parcels
@@ -17,13 +19,11 @@ const AssignRider = () => {
     },
   });
 
-  // Fetch riders for selected parcel (handle multiple districts)
+  // Fetch riders for selected parcel
   const { data: riders = [], refetch: refetchRiders } = useQuery({
     queryKey: ["riders", selectedParcel?._id],
     queryFn: async () => {
       if (!selectedParcel) return [];
-
-      // Split service centers into individual districts
       const districts = selectedParcel.receiver_service_center
         .replace(/[()]/g, "")
         .split(",")
@@ -35,11 +35,9 @@ const AssignRider = () => {
         allRiders = [...allRiders, ...res.data.riders];
       }
 
-      // Remove duplicates if any
-      const uniqueRiders = Array.from(new Map(allRiders.map(r => [r._id, r])).values());
-      return uniqueRiders;
+      return Array.from(new Map(allRiders.map(r => [r._id, r])).values());
     },
-    enabled: !!selectedParcel, // only run when a parcel is selected
+    enabled: !!selectedParcel,
   });
 
   const openAssignModal = (parcel) => {
@@ -54,10 +52,19 @@ const AssignRider = () => {
 
   const handleAssignRider = async (rider) => {
     try {
+      // Assign rider in backend
       await axiosSecure.patch(`/parcels/${selectedParcel._id}/assign-rider`, {
         riderId: rider._id,
         riderName: rider.name,
         riderEmail: rider.email,
+      });
+
+      // ✅ Log tracking as admin
+      await logTracking({
+        tracking_id: selectedParcel.tracking_id,
+        status: "assigned",
+        message: `Rider ${rider.name} assigned to parcel`,
+        details: { riderId: rider._id, riderEmail: rider.email },
       });
 
       Swal.fire({
@@ -78,14 +85,11 @@ const AssignRider = () => {
     }
   };
 
-
   if (isLoading) return <div className="p-6 text-center">Loading parcels...</div>;
 
   return (
     <div className="p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
-        Assign Rider
-      </h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Assign Rider</h2>
 
       {parcels.length === 0 ? (
         <p className="text-gray-500 text-center py-6">No pending parcels available.</p>
@@ -110,40 +114,12 @@ const AssignRider = () => {
                 <tr key={parcel._id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                   <td>{index + 1}</td>
                   <td className="font-mono">{parcel.tracking_id}</td>
-                  <td>
-                    <div>
-                      <p className="font-medium">{parcel.sender_name}</p>
-                      <p className="text-sm text-gray-400">{parcel.sender_region}</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <p className="font-medium">{parcel.receiver_name}</p>
-                      <p className="text-sm text-gray-400">{parcel.receiver_region}</p>
-                    </div>
-                  </td>
+                  <td>{parcel.sender_name}</td>
+                  <td>{parcel.receiver_name}</td>
                   <td>{parcel.weight} kg</td>
                   <td>${parcel.deliveryCost}</td>
-                  <td>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${parcel.delivery_status === "not_collected"
-                        ? "bg-yellow-200 text-yellow-800"
-                        : "bg-green-200 text-green-800"
-                        }`}
-                    >
-                      {parcel.delivery_status}
-                    </span>
-                  </td>
-                  <td>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${parcel.Payment_status === "unpaid"
-                        ? "bg-red-200 text-red-800"
-                        : "bg-green-200 text-green-800"
-                        }`}
-                    >
-                      {parcel.Payment_status}
-                    </span>
-                  </td>
+                  <td>{parcel.delivery_status}</td>
+                  <td>{parcel.Payment_status}</td>
                   <td>
                     <button
                       className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded-lg transition"
@@ -163,9 +139,7 @@ const AssignRider = () => {
       {modalOpen && selectedParcel && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-xl w-96">
-            <h3 className="text-lg font-bold mb-4">
-              Assign Rider for {selectedParcel.tracking_id}
-            </h3>
+            <h3 className="text-lg font-bold mb-4">Assign Rider for {selectedParcel.tracking_id}</h3>
             <div className="max-h-64 overflow-y-auto">
               {riders.length === 0 ? (
                 <p>No riders available in {selectedParcel.receiver_service_center}</p>

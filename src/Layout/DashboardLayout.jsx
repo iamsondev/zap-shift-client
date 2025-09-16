@@ -77,7 +77,7 @@ const DashboardLayout = () => {
 
             <li>
               <NavLink
-                to="/dashboard/trackPackage"
+                to="/dashboard/trackParcel"
                 className={({ isActive }) =>
                   `flex items-center gap-3 p-3 rounded-lg transition ${isActive
                     ? "bg-blue-500 text-white shadow-md"
@@ -85,7 +85,7 @@ const DashboardLayout = () => {
                   }`
                 }
               >
-                <FaSearchLocation /> Track Package
+                <FaSearchLocation /> Track Parcel
               </NavLink>
             </li>
 
