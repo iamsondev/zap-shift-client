@@ -17,7 +17,6 @@ import PaymentHistory from "../Pages/Dashboard.jsx/PaymentHistory/PaymentHistory
 import BeARider from "../Pages/Home/BeARider/BeARider";
 import PendingRiders from "../Pages/Dashboard.jsx/PendingRiders";
 import ActiveRiders from "../Pages/Dashboard.jsx/ActiveRiders";
-import DashboardHome from "../Pages/Dashboard.jsx/DashboardHome";
 import AdminRoutes from "../Pages/Routes/AdminRoutes";
 import MakeAdmin from "../Pages/Dashboard.jsx/MakeAdmin";
 import Forbidden from "../Pages/forbidden/forbidden";
@@ -27,6 +26,7 @@ import RiderRoutes from "../Pages/Routes/RiderRoutes";
 import CompletedDeliveries from "../Pages/Dashboard.jsx/CompletedDeliveries";
 import MyEarnings from "../Pages/Dashboard.jsx/MyEarnings";
 import TrackParcel from "../Pages/Dashboard.jsx/TrackParcel";
+import DashboardHome from "../Pages/Dashboard.jsx/DashboardHome/DashboardHome";
 
 
 export const router = createBrowserRouter([
